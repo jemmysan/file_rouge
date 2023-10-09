@@ -22,6 +22,9 @@ class User extends Authenticatable
         'id',
         'nom',
         'prenom',
+        'login',
+        'password',
+        'role'
     ];
 
     /**
@@ -30,7 +33,6 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
         'remember_token',
         'created_at',
         'updated_at'
@@ -41,9 +43,9 @@ class User extends Authenticatable
      *
      * @var array<string, string>
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    // protected $casts = [
+    //     'email_verified_at' => 'datetime',
+    // ];
 
     public function modules()
     {
