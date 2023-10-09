@@ -11,11 +11,12 @@ class Module extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id','libelle'];
+    protected $guarded = [];
 
-
+    protected $hidden = ['created_at','updated_at'];
+    
     public function profs()
     {
-        return $this->belongsToMany(User::class,'prof_modules','professeur_id','module_id');
+        return $this->belongsToMany(User::class,'prof_modules','module_id','professeur_id');
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\CoursController;
 use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\SemestreController;
+use App\Http\Controllers\SessionCoursController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,13 @@ Route::prefix('classe')->group(function (){
 
 /**** Cours ******/
 Route::prefix('cours')->group(function (){
+    Route::get('lister',[CoursController::class,'index']);
     Route::get('/coursComponents',[CoursController::class,'coursElements']);
     Route::post('/addCours',[CoursController::class,'store']);
+});
+
+
+/**** Session_Cours ******/
+Route::prefix('sessionCours')->group(function (){
+    Route::post('',[SessionCoursController::class,'store']);
 });

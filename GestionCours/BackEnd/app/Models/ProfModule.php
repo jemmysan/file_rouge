@@ -13,13 +13,17 @@ class ProfModule extends Model
 
     protected $guarded = [];
 
+    protected $hidden = ['created_at','updated_at'];
+    
     public function prof()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'professeur_id');
     }
 
     public function module()
     {
         return $this->belongsTo(Module::class);
     }
+
+    
 }
