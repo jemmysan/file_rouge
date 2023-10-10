@@ -48,6 +48,7 @@ class UserController extends Controller
        });
     }
 
+
     public function login(LoginRequest $request)
     {
         if(auth()->attempt($request->only(['login','password'])))
@@ -71,6 +72,8 @@ class UserController extends Controller
         }
     }
 
+
+    
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();

@@ -63,5 +63,5 @@ Route::prefix('cours')->group(function (){
 
 /**** Session_Cours ******/
 Route::prefix('sessionCours')->group(function (){
-    Route::post('',[SessionCoursController::class,'store']);
+    Route::post('/add',[SessionCoursController::class,'store']);
 });
