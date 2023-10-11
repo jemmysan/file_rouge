@@ -5,15 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\SessionCours;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Resources\resources\SessionCoursResource;
 
 class SessionCoursController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index($idCours)
     {
-        
+        return SessionCoursResource::collection(SessionCours::where('cours_id',$idCours)->get());
+        return SessionCoursResource::collection(SessionCours::all());
     }
 
     /**
