@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use auth;
 use App\Models\User;
+use App\Imports\UsersImport;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
-use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Resources\resources\UserResource;
 
 class UserController extends Controller
@@ -48,6 +50,33 @@ class UserController extends Controller
        });
     }
 
+
+   /************  import fichier excel *********/
+   public function import(Request $request) 
+   {
+       $file = $request->file('file');
+    //    return $file;
+    //    Excel::import(new UsersImport, $file);
+       $data = Excel::toCollection(new UsersImport, $file);
+    //    return $data;
+       foreach ($data[0] as $row) {
+        foreach ($row as $cell) {
+           $etu = new UsersImport();
+           $save = $etu->model($cell);
+           $idEtu = $save->save();
+           Inscription::create([
+            'etudiant_id'=>$idEtu->id,
+            'classe_id'=>$request->classe_id,
+            'annee_id'=>$request->annee_id
+           ]);
+           Classe::where('id',$request->classe_id)->first()
+                    ->increment('effectif');
+        }
+    }
+
+       
+       return response()->json(['messages'=>'Inscription effectuée avec succes']);
+   }
 
     public function login(LoginRequest $request)
     {

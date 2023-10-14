@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Salle;
 use App\Models\SessionCours;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,11 +12,17 @@ class SessionCoursController extends Controller
 {
     /**
      * Display a listing of the resource.
+     
      */
+    // public function getSalle(){
+
+    //      return Salle::all();
+    //  }
+
     public function index($idCours)
     {
         return SessionCoursResource::collection(SessionCours::where('cours_id',$idCours)->get());
-        return SessionCoursResource::collection(SessionCours::all());
+        // return SessionCoursResource::collection(SessionCours::all());
     }
 
     /**
@@ -24,14 +31,16 @@ class SessionCoursController extends Controller
     public function store(Request $request)
     {
         return DB::transaction(function () use($request){
+            $hd = strtotime('1970-01-01'.' '.$request->heure_debut);
+            $hf = strtotime('1970-01-01'.' '.$request->heure_fin);
             SessionCours::create([
                 'cours_id'=>$request->cours_id,
                 'salle_id'=>$request->salle_id,
                 'date'=>$request->date,
-                'heure_debut'=>$request->heure_debut,
-                'heure_fin'=>$request->heure_fin,
-                'type_session'=>$request->type_session,
-                'duree'=> $request->heure_fin - $request->heure_debut
+                'heure_debut'=>$hd,
+                'heure_fin'=>$hf,
+                'type_session'=>$request->type,
+                'duree'=> $hf - $hd
             ]);
 
             return response()->json([

@@ -17,11 +17,11 @@ class SessionCours extends Model
 
     public function cours()
     {
-        return $this->belongsTo(Cours::class);
+        return $this->belongsTo(Cours::class,'cours_id');
     }
 
     public function salle()
     {
-        return $this->belongsTo(Salle::class);
+        return $this->belongsTo(Salle::class,'salle_id');
     }
 }

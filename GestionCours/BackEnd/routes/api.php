@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CoursController;
+use App\Http\Controllers\SalleController;
 use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\SemestreController;
@@ -33,7 +34,9 @@ Route::prefix('users')->group(function (){
     Route::post('/register',[UserController::class,'register']);
     Route::post('/login',[UserController::class,'login']);
     Route::post('/logout',[UserController::class,'logout'])->middleware('auth:sanctum');
+    Route::post('/import',[UserController::class,'import']);
 });
+
 
 /**** Module *****/
 Route::prefix('module')->group(function (){
@@ -53,6 +56,7 @@ Route::prefix('classe')->group(function (){
 });
 
 
+
 /**** Cours ******/
 Route::prefix('cours')->group(function (){
     Route::get('lister',[CoursController::class,'index']);
@@ -63,6 +67,14 @@ Route::prefix('cours')->group(function (){
 
 /**** Session_Cours ******/
 Route::prefix('sessionCours')->group(function (){
-    Route::post('/add',[SessionCoursController::class,'store']);
+    Route::post('/ajout',[SessionCoursController::class,'store']);
     Route::get('/list/{idC}',[SessionCoursController::class,'index']);
+    Route::get('/salle',[SessionCoursController::class,'getSalle']);
+
+});
+
+
+/***** Salle *******/
+Route::prefix('salle')->group(function (){
+    Route::get('/{tailleSal}',[SalleController::class,'getSalleSupEgalTaillClasse']);
 });

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Models\Cours;
 use App\Models\Filiere;
 use Illuminate\Database\Eloquent\Model;
@@ -26,5 +27,10 @@ class Classe extends Model
     public function cours()
     {
         return $this->hasMany(Cours::class);
+    }
+
+    public function eleves()
+    {
+        return $this->hasMany(User::class);
     }
 }

@@ -19,8 +19,8 @@ class SessionCoursResource extends JsonResource
             'salle_id'=>$this->salle,
             'type_session'=>$this->type_session,
             'date'=>$this->date,
-            'heure_d'=>$this->heure_d,
-            'heure_f'=>$this->heure_f
+            'heure_debut'=>$this->heure_debut,
+            'heure_fin'=>$this->heure_fin
         ];
     }
 }

@@ -6,6 +6,8 @@ use App\Models\Cours;
 use App\Models\Module;
 use App\Models\Semestre;
 use App\Models\ProfModule;
+use App\Imports\UsersImport;
+use App\Models\SessionCours;
 use Illuminate\Http\Request;
 use App\Models\AnneeSemestre;
 use Illuminate\Support\Facades\DB;
@@ -30,12 +32,18 @@ class CoursController extends Controller
         return CoursResource::collection(Cours::all());
     }
 
+
+    
+
+    /********************************************/
+
     public function coursElements()
     {
         $modules = new ModuleController;
         $semestres = new SemestreController;
         $classes = new ClasseController;
         $profs = new UserController;
+        $sessionCours = new SessionCours;
         
         $mod = $modules->index();
         $sem = $semestres->index();
@@ -78,6 +86,7 @@ class CoursController extends Controller
             return response()->json(['message'=>'Cours créé avec succès']);
        });
     }
+
 
    
     /**

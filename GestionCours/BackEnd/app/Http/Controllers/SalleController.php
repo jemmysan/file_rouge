@@ -12,7 +12,12 @@ class SalleController extends Controller
      */
     public function index()
     {
-        //
+        return Salle::all();
+    }
+
+    public function getSalleSupEgalTaillClasse($nombrePlace)
+    {
+        return Salle::where('nombre_place','>=',$nombrePlace)->get();
     }
 
     /**

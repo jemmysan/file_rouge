@@ -51,4 +51,6 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Module::class,'prof_modules','professeur_id','module_id');
     }
+
+    
 }

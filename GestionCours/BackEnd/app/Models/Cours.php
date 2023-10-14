@@ -42,4 +42,9 @@ class Cours extends Model
     {
         return $this->belongsTo(ProfModule::class,'prof_module_id');
     }
+
+    public function sessions()
+    {
+        return $this->hasMany(SessionCours::class);
+    }
 }

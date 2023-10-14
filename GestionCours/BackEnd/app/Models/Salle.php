@@ -12,8 +12,11 @@ class Salle extends Model
     use HasFactory;
 
     protected $guarded = [];
-    protected $hidden = ['created_at','update_at'];
+    // protected $hidden = ['created_at','update_at'];
 
 
-   
+    public function sessions()
+    {
+        return $this->hasMany(SessionCours::class);
+    }
 }
