@@ -50,9 +50,9 @@ class SessionCoursController extends Controller
         });    
     }
 
-    public function checkSession()
+    public function sessionOfCours($idCours)
     {
-
+        return SessionCours::where('cours_id',$idCours)->get();
     }
 
     /**

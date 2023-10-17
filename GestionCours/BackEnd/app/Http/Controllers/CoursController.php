@@ -87,14 +87,25 @@ class CoursController extends Controller
        });
     }
 
+    public function getProfCourses($idProf)
+    {
+        $tabCours = []; 
+        $profId = ProfModule::where('professeur_id',$idProf)->get();
+        foreach ($profId as $item) {
+            $cours = Cours::where("prof_module_id",$item['id'])->get();
+            $tabCours = CoursResource::collection($cours);
+            // array_push($tabCours,$cours);
+        }
+        return $tabCours;
+    }
 
    
     /**
      * Display the specified resource.
      */
-    public function show(Cours $cours)
+    public function show(Request $cours)
     {
-        //
+        
     }
 
     /**

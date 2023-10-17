@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use auth;
 use App\Models\User;
+use App\Models\Classe;
+use App\Models\Inscription;
 use App\Imports\UsersImport;
+
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
-
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Hash;
@@ -55,17 +57,16 @@ class UserController extends Controller
    public function import(Request $request) 
    {
        $file = $request->file('file');
-    //    return $file;
     //    Excel::import(new UsersImport, $file);
-       $data = Excel::toCollection(new UsersImport, $file);
+       $data = Excel::toArray(new UsersImport, $file);
     //    return $data;
-       foreach ($data[0] as $row) {
+       foreach ($data as $row) {
         foreach ($row as $cell) {
-           $etu = new UsersImport();
-           $save = $etu->model($cell);
-           $idEtu = $save->save();
+           $etu = (new UsersImport)->model($cell);
+           $etu->save();
+            $etud = $etu->id;
            Inscription::create([
-            'etudiant_id'=>$idEtu->id,
+            'etudiant_id'=>$etud,
             'classe_id'=>$request->classe_id,
             'annee_id'=>$request->annee_id
            ]);
@@ -88,7 +89,7 @@ class UserController extends Controller
             return response()->json([
                 'status'=>200,
                 'messages'=>'Utilisateur connecté',
-                'user'=>$user,
+                'user'=>UserResource::make($user),
                 'token'=>$token
             ]);
         }

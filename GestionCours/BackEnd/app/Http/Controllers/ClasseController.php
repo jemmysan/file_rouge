@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classe;
+use App\Models\Inscription;
 use Illuminate\Http\Request;
 use App\Http\Resources\resources\ClasseResource;
 
@@ -15,6 +16,8 @@ class ClasseController extends Controller
     {
        return ClasseResource::collection(Classe::all());
     }
+
+   
 
     /**
      * Store a newly created resource in storage.

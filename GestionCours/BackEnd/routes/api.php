@@ -9,6 +9,7 @@ use App\Http\Controllers\SalleController;
 use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\SemestreController;
+use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\SessionCoursController;
 
 /*
@@ -30,11 +31,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::prefix('users')->group(function (){
-    Route::get('/{role}',[UserController::class,'specificUser']);
     Route::post('/register',[UserController::class,'register']);
     Route::post('/login',[UserController::class,'login']);
     Route::post('/logout',[UserController::class,'logout'])->middleware('auth:sanctum');
     Route::post('/import',[UserController::class,'import']);
+
+    Route::get('/{role}',[UserController::class,'specificUser']);
 });
 
 
@@ -59,17 +61,22 @@ Route::prefix('classe')->group(function (){
 
 /**** Cours ******/
 Route::prefix('cours')->group(function (){
+    Route::post('/addCours',[CoursController::class,'store']);
+
     Route::get('lister',[CoursController::class,'index']);
     Route::get('/coursComponents',[CoursController::class,'coursElements']);
-    Route::post('/addCours',[CoursController::class,'store']);
+    Route::get('/profCours/{idProf}',[CoursController::class,'getProfCourses']);
+
 });
 
 
 /**** Session_Cours ******/
 Route::prefix('sessionCours')->group(function (){
     Route::post('/ajout',[SessionCoursController::class,'store']);
+
     Route::get('/list/{idC}',[SessionCoursController::class,'index']);
     Route::get('/salle',[SessionCoursController::class,'getSalle']);
+    Route::get('/cours/{idCours}',[SessionCoursController::class,'sessionOfCours']);
 
 });
 
@@ -77,4 +84,9 @@ Route::prefix('sessionCours')->group(function (){
 /***** Salle *******/
 Route::prefix('salle')->group(function (){
     Route::get('/{tailleSal}',[SalleController::class,'getSalleSupEgalTaillClasse']);
+});
+
+
+Route::prefix('inscription')->group(function () {
+    Route::get('/list/class/{idCl}',[InscriptionController::class,'listOfStudent']);
 });
