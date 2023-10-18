@@ -52,7 +52,8 @@ class SessionCoursController extends Controller
 
     public function sessionOfCours($idCours)
     {
-        return SessionCours::where('cours_id',$idCours)->get();
+        $session = SessionCours::where('cours_id',$idCours)->get();
+        return SessionCoursResource::collection($session);
     }
 
     /**
