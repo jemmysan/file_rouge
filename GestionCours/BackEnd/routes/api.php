@@ -11,6 +11,7 @@ use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\SemestreController;
 use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\SessionCoursController;
+use App\Http\Controllers\AnnuleSessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,4 +90,9 @@ Route::prefix('salle')->group(function (){
 
 Route::prefix('inscription')->group(function () {
     Route::get('/list/class/{idCl}',[InscriptionController::class,'listOfStudent']);
+});
+
+/****** Annulation Session ***********/
+Route::prefix('annuleSession')->group(function (){
+    Route::post('/annule',[AnnuleSessionController::class,'store']);
 });
